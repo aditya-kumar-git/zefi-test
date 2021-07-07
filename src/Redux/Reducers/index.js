@@ -11,8 +11,30 @@ let authToken = (iniState = '', action) => {
     }
 };
 
+let defaultSearch = (iniState = [], action) => {
+    switch (action.type) {
+        case "SEARCH": {
+            return action.payload;
+        }
+        default: {
+            return iniState;
+        }
+    }
+};
+
+let metaData = (iniState = {}, action) => {
+    switch (action.type) {
+        case "METADATA": {
+            return action.payload;
+        }
+        default: {
+            return iniState;
+        }
+    }
+};
+
 let allReducers = combineReducers({
-    authToken
+    authToken,defaultSearch,metaData
 });
 
 export default allReducers;

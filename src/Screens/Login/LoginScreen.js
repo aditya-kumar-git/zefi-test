@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { Image, View, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Keyboard, StatusBar } from 'react-native'
 import { Magic, RPCError, RPCErrorCode } from '@magic-sdk/react-native';
 import { useDispatch } from 'react-redux';
-import { authTokenAction } from 'Redux/Actions';
+import { authTokenAction, metaDataAction } from 'Redux/Actions';
+import styles from './LoginStyle'
+import BannerImage from 'Images/BannerImage.jpg'
 
 
 
@@ -20,66 +22,95 @@ export default function LoginScreen(props) {
     }
 
     const sendEmail = async () => {
-        console.log("Sending Email");
-        try {
-            var response = await auth.auth.loginWithMagicLink({ email: emailAdd});
-            console.log("Kr diya login");
-            dispatch(authTokenAction(response))
-        } catch (err) {
-            if (err instanceof RPCError) {
-                switch (err.code) {
-                    case RPCErrorCode.MagicLinkFailedVerification: alert("Verification Failed"); break
-                    case RPCErrorCode.MagicLinkExpired: alert("Link Expired"); break
-                    case RPCErrorCode.MagicLinkRateLimited: alert("Link Rate Limited"); break
-                    case RPCErrorCode.UserAlreadyLoggedIn: alert("User Already LoggedIn"); break
+        if (emailAdd !== '') {
+            Keyboard.dismiss()
+            console.log("Sending Email");
+            try {
+                var response = await auth.auth.loginWithMagicLink({ email: emailAdd });
+                console.log("Kr diya login");
+                dispatch(authTokenAction(response))
+            } catch (err) {
+                if (err instanceof RPCError) {
+                    switch (err.code) {
+                        case RPCErrorCode.MagicLinkFailedVerification: alert("Verification Failed"); break
+                        case RPCErrorCode.MagicLinkExpired: alert("Link Expired"); break
+                        case RPCErrorCode.MagicLinkRateLimited: alert("Link Rate Limited"); break
+                        case RPCErrorCode.UserAlreadyLoggedIn: alert("User Already LoggedIn"); break
+                    }
                 }
+
             }
 
+            try {
+                const didMetaData = await auth.user.getMetadata();
+                dispatch(metaDataAction(didMetaData))
+            } catch (error) {
+                console.log(error);
+            }
         }
-
-        // try {
-        //     var res = await auth.user.getMetadata();
-        //     console.log(res);
-        // } catch (error) {
-
-        // }
-
-        // try {
-        //     var res = await auth.user.getIdToken();
-        //     console.log(res);
-        // } catch (error) {
-
-        // }
     }
 
     const auth = new Magic('pk_live_E057F6F4CA44BD41');
     const dispatch = useDispatch()
     return (
-        <View
+        <KeyboardAvoidingView
             style={{ flex: 1 }}
+            behavior="padding"
         >
-            <Text>Login</Text>
-            <TextInput
-                style={{
-                    backgroundColor: 'red',
-                    padding: 12
-                }}
-                placeholder="Email ID"
-                value={emailAdd}
-                onChangeText={changeEmail}
-                keyboardType='email-address'
-                autoCapitalize='none'
-                autoCompleteType='email'
-                textContentType='emailAddress'
-                autoCorrect={false}
-                returnKeyType='go'
-                onSubmitEditing={sendEmail}
+            <StatusBar
+                animated={true}
+                hidden={true}
             />
-            <TouchableOpacity
-                onPress={sendEmail}
+            <View
+                style={styles.FullContainer}
             >
-                <Text>Continue</Text>
-            </TouchableOpacity>
-        </View>
+
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={Keyboard.dismiss}
+                    style={styles.UpperBlock}
+                >
+                    <Image
+                        source={BannerImage}
+                        style={styles.UpperBlockImage}
+                    />
+
+                </TouchableOpacity>
+                <SafeAreaView
+                    style={styles.Container}
+                >
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={Keyboard.dismiss}
+                        style={styles.LowerBlock}>
+
+                        <Text style={styles.HeaderText}>Welcome to</Text>
+                        <Text style={styles.HeaderTextHighlight}>YouTube</Text>
+                        <Text style={styles.Subtext}>Boradcast Yourself, and watch a number of your favourite creators.</Text>
+                        <TextInput
+                            style={styles.EmailInput}
+                            placeholder="Email ID"
+                            value={emailAdd}
+                            onChangeText={changeEmail}
+                            keyboardType='email-address'
+                            autoCapitalize='none'
+                            autoCompleteType='email'
+                            textContentType='emailAddress'
+                            autoCorrect={false}
+                            returnKeyType='go'
+                            onSubmitEditing={sendEmail}
+                        />
+                        <TouchableOpacity
+                            onPress={sendEmail}
+                            style={styles.SubmitButton}
+                            activeOpacity={0.8}
+                        >
+                            <Text style={styles.SubmitButtonText}>Continue</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+
+                </SafeAreaView>
+            </View>
+        </KeyboardAvoidingView>
     )
 }

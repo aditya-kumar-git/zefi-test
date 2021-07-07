@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { authTokenAction } from 'Redux/Actions';
+import { authTokenAction, metaDataAction } from 'Redux/Actions';
 import DashboardScreen from 'Screens/Dashboard';
 import LoadingScreen from 'Screens/Loading';
 import LoginScreen from 'Screens/Login';
@@ -22,8 +22,18 @@ export default function Navigator() {
     const checkLoggedIn = async () => {
         if (await auth.user.isLoggedIn()) {
             console.log("Logged in hai");
-            const didToken = await auth.user.getIdToken(); 
-            dispatch(authTokenAction(didToken))
+            try {
+                const didMetaData = await auth.user.getMetadata();
+                dispatch(metaDataAction(didMetaData))
+            } catch (error) {
+                console.log(error);
+            }
+            try {
+                const didToken = await auth.user.getIdToken();
+                dispatch(authTokenAction(didToken))
+            } catch (error) {
+                console.log(error);
+            }
             setIsLoading(false)
         }
         else {
@@ -38,21 +48,22 @@ export default function Navigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator
-            screenOptions={{
-                headerShown: false
-            }}
+                screenOptions={{
+                    headerShown: false
+                }}
             >
                 {
                     isLoading ?
                         <Stack.Screen name="Loading" component={LoadingScreen} />
                         :
-                        AuthToken !== '' ?
-                            <Stack.Screen name="Dashboard" component={DashboardScreen} />
-                            :
-                            <>
-                                <Stack.Screen name="Login" component={LoginScreen} />
-                                <Stack.Screen name="Dashboard" component={DashboardScreen} />
-                            </>
+                        <Stack.Screen name="Loading" component={LoadingScreen} />
+                        // AuthToken !== '' ?
+                        //     <Stack.Screen name="Dashboard" component={DashboardScreen} />
+                        //     :
+                        //     <>
+                        //         <Stack.Screen name="Login" component={LoginScreen} />
+                        //         <Stack.Screen name="Dashboard" component={DashboardScreen} />
+                        //     </>
                 }
             </Stack.Navigator>
         </NavigationContainer>

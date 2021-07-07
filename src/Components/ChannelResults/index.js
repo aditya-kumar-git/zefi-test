@@ -1,0 +1,2 @@
+import ChannelResultComponent from './ChannelResultComponent'
+export default ChannelResultComponent
