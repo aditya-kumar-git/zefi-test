@@ -37,7 +37,11 @@ export default function Navigator() {
     const dispatch = useDispatch()
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+            >
                 {
                     isLoading ?
                         <Stack.Screen name="Loading" component={LoadingScreen} />

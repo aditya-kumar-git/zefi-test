@@ -11,6 +11,7 @@ module.exports = function(api) {
             Screens: "./src/Screens",
             Components: "./src/Components",
             Redux: "./src/Redux",
+            Images: "./src/Images",
           },
         },
       ],
