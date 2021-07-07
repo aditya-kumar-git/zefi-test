@@ -34,7 +34,7 @@ let metaData = (iniState = {}, action) => {
 };
 
 let allReducers = combineReducers({
-    authToken,defaultSearch,metaData
+    authToken, defaultSearch, metaData
 });
 
 export default allReducers;

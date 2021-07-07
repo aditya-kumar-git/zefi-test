@@ -24,7 +24,7 @@ export default function SearchResultComponent(props) {
                 style={styles.AdditionalDataContainer}
             >
                 <Text style={styles.AdditionalData}>{data.snippet.channelTitle}</Text>
-                <Text  style={styles.Seperator}>|</Text>
+                <Text style={styles.Seperator}>|</Text>
                 <Text style={styles.AdditionalData}>{moment(data.snippet.publishedAt).fromNow()}</Text>
 
             </View>

@@ -22,7 +22,6 @@ export let defaultSearchAction = () => {
         params: { q: "mkbhd", part: "snippet", maxResults: 10, key: KEY },
       })
 
-
       dispatch({
         type: "SEARCH",
         payload: output.data.items,

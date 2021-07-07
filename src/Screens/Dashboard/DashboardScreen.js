@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { TouchableOpacity, StatusBar, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Keyboard } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { defaultSearchAction, emptySearchAction,  querySearchAction } from 'Redux/Actions';
+import { defaultSearchAction, emptySearchAction, querySearchAction } from 'Redux/Actions';
 import styles from './DashboardStyle'
 import VideoResults from 'Components/VideoResults'
 import ChannelResults from 'Components/ChannelResults'
@@ -39,19 +39,17 @@ export default function DashboardScreen(props) {
             <SafeAreaView
                 style={styles.Container}
             >
-
                 <AccountBox
                     navigation={props.navigation}
                 />
-
                 <View
                     style={styles.SearchBarContainer}
                 >
                     <TouchableOpacity
-                    onPress={submitSearch}
-                    activeOpacity={0.8}
+                        onPress={submitSearch}
+                        activeOpacity={0.8}
                     >
-                    <AntDesign name="search1" style={styles.IconStyle} />
+                        <AntDesign name="search1" style={styles.IconStyle} />
                     </TouchableOpacity>
 
                     <TextInput
@@ -88,11 +86,9 @@ export default function DashboardScreen(props) {
                         activeOpacity={1}
                         style={styles.ActivityIndicatorContainer}
                     >
-                            <ActivityIndicator />
+                        <ActivityIndicator />
                     </TouchableOpacity>
                 }
-
-
             </SafeAreaView>
         </View>
     )

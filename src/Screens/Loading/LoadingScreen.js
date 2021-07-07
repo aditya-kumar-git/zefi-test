@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import {Text, View, SafeAreaView, StatusBar,Animated, Dimensions } from 'react-native'
+import { View, SafeAreaView, StatusBar, Animated } from 'react-native'
 import styles from './LoadingStyle'
 import YoutubeLogo from 'Images/YoutubeLogo'
 import { useEffect } from 'react';
@@ -10,21 +10,21 @@ export default function LoadingScreen() {
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
-              Animated.timing(logoSize, {
-                toValue: 0.8,
-                duration: 1000,
-                useNativeDriver:true
-              }),
-              Animated.timing(logoSize, {
-                toValue: 1,
-                duration: 1000,
-                useNativeDriver:true
-              })
+                Animated.timing(logoSize, {
+                    toValue: 0.8,
+                    duration: 1000,
+                    useNativeDriver: true
+                }),
+                Animated.timing(logoSize, {
+                    toValue: 1,
+                    duration: 1000,
+                    useNativeDriver: true
+                })
             ]),
             {
-              iterations: 100
+                iterations: 100
             }
-          ).start()
+        ).start()
     }, [])
 
     return (
@@ -33,13 +33,13 @@ export default function LoadingScreen() {
         >
             <StatusBar
                 animated={true}
-                hidden={true} 
-                />
+                hidden={true}
+            />
             <SafeAreaView
                 style={styles.Container}
             >
                 <Animated.View
-                    style={[styles.YoutubeLogoContainer,{transform: [{scale:logoSize}]}]}
+                    style={[styles.YoutubeLogoContainer, { transform: [{ scale: logoSize }] }]}
                 >
                     <YoutubeLogo />
                 </Animated.View>
