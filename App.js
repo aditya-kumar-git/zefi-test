@@ -1,40 +1,17 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Login from 'Screens/Login'
-import Dashboard from 'Screens/Dashboard'
+import Navigator from 'Screens/Navigator'
 import store from 'Redux/Store'
 import { Provider } from "react-redux";
+import { Magic } from '@magic-sdk/react-native';
 
 
-const Stack = createStackNavigator();
-let loggedIn = true
 export default function App() {
+
+  const auth = new Magic('pk_live_E057F6F4CA44BD41');
   return (
     <Provider store={store} >
-      <NavigationContainer>
-        <Stack.Navigator>
-          {
-            loggedIn ?
-              <Stack.Screen name="Dashboard" component={Dashboard} />
-              :
-              <>
-                <Stack.Screen name="Dashboard" component={Dashboard} />
-                <Stack.Screen name="Login" component={Login} />
-              </>
-          }
-        </Stack.Navigator>
-      </NavigationContainer>
+      <auth.Relayer />
+      <Navigator />
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

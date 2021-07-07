@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 
-let tempTest = (iniState = 'Working', action) => {
+let authToken = (iniState = '', action) => {
     switch (action.type) {
-        case "TEMPPRIMARY": {
+        case "AUTHTOKEN": {
             return action.payload;
         }
         default: {
@@ -12,7 +12,7 @@ let tempTest = (iniState = 'Working', action) => {
 };
 
 let allReducers = combineReducers({
-    tempTest
+    authToken
 });
 
 export default allReducers;
