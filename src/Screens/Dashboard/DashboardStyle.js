@@ -27,5 +27,8 @@ export default StyleSheet.create({
         marginRight: 10,
         color: 'grey'
     },
+    ActivityIndicatorContainer: {
+        justifyContent:'center',alignItems:'center',flex:1
+    },
    
 })

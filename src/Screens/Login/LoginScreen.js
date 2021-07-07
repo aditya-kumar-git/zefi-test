@@ -24,10 +24,8 @@ export default function LoginScreen(props) {
     const sendEmail = async () => {
         if (emailAdd !== '') {
             Keyboard.dismiss()
-            console.log("Sending Email");
             try {
                 var response = await auth.auth.loginWithMagicLink({ email: emailAdd });
-                console.log("Kr diya login");
                 dispatch(authTokenAction(response))
             } catch (err) {
                 if (err instanceof RPCError) {

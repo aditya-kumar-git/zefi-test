@@ -51,3 +51,10 @@ export let querySearchAction = (query) => {
     }
   }
 }
+
+export let emptySearchAction = () => {
+  return {
+    type: "SEARCH",
+    payload: [],
+  };
+};

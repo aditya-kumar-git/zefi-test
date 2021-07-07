@@ -21,7 +21,6 @@ export default function Navigator() {
 
     const checkLoggedIn = async () => {
         if (await auth.user.isLoggedIn()) {
-            console.log("Logged in hai");
             try {
                 const didMetaData = await auth.user.getMetadata();
                 dispatch(metaDataAction(didMetaData))
@@ -37,12 +36,10 @@ export default function Navigator() {
             setIsLoading(false)
         }
         else {
-            console.log("Logged in nhi hai");
             setIsLoading(false)
         }
     }
     const AuthToken = useSelector((state) => state.authToken)
-
     const Stack = createStackNavigator();
     const dispatch = useDispatch()
     return (
@@ -59,10 +56,8 @@ export default function Navigator() {
                         AuthToken !== '' ?
                             <Stack.Screen name="Dashboard" component={DashboardScreen} />
                             :
-                            <>
-                                <Stack.Screen name="Login" component={LoginScreen} />
-                                <Stack.Screen name="Dashboard" component={DashboardScreen} />
-                            </>
+                            <Stack.Screen name="Login" component={LoginScreen} />
+
                 }
             </Stack.Navigator>
         </NavigationContainer>

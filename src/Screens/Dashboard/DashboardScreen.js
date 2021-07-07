@@ -1,9 +1,9 @@
 
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { StatusBar, View, SafeAreaView, FlatList, TextInput  } from 'react-native'
+import { TouchableOpacity, StatusBar, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Keyboard } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { defaultSearchAction, querySearchAction } from 'Redux/Actions';
+import { defaultSearchAction, emptySearchAction,  querySearchAction } from 'Redux/Actions';
 import styles from './DashboardStyle'
 import VideoResults from 'Components/VideoResults'
 import ChannelResults from 'Components/ChannelResults'
@@ -12,50 +12,47 @@ import AccountBox from 'Components/AccountBox'
 
 export default function DashboardScreen(props) {
     const [searchQuery, setSearchQuery] = useState('')
-    
 
     const changeSearchQuery = (searchText) => {
         setSearchQuery(searchText)
     }
 
-
     const submitSearch = () => {
+        Keyboard.dismiss()
+        dispatch(emptySearchAction())
         dispatch(querySearchAction(searchQuery))
         setSearchQuery('')
     }
 
     useEffect(() => {
-        console.log("Chal bhai");
-        // dispatch(defaultSearchAction())
+        dispatch(defaultSearchAction())
     }, [])
 
-
-
-    
     const SearchReducer = useSelector((state) => state.defaultSearch)
-    
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch()
     return (
-        <View
-            style={styles.FullContainer}
-        >
+        <View style={styles.FullContainer} >
             <StatusBar
-                animated={true}
                 barStyle='dark-content'
             />
             <SafeAreaView
                 style={styles.Container}
             >
 
-<AccountBox
-navigation={props.navigation}
-/>
-               
+                <AccountBox
+                    navigation={props.navigation}
+                />
+
                 <View
                     style={styles.SearchBarContainer}
                 >
+                    <TouchableOpacity
+                    onPress={submitSearch}
+                    activeOpacity={0.8}
+                    >
                     <AntDesign name="search1" style={styles.IconStyle} />
+                    </TouchableOpacity>
 
                     <TextInput
                         style={styles.SearchBar}
@@ -67,7 +64,7 @@ navigation={props.navigation}
                         onSubmitEditing={submitSearch}
                     />
                 </View>
-                {SearchReducer.length > 0 &&
+                {SearchReducer.length > 0 ?
                     <FlatList
                         data={SearchReducer}
                         keyExtractor={(item) => {
@@ -85,6 +82,14 @@ navigation={props.navigation}
                             }
                         }}
                     />
+                    :
+                    <TouchableOpacity
+                        onPress={() => Keyboard.dismiss()}
+                        activeOpacity={1}
+                        style={styles.ActivityIndicatorContainer}
+                    >
+                            <ActivityIndicator />
+                    </TouchableOpacity>
                 }
 
 

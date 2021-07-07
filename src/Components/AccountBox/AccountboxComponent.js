@@ -16,11 +16,7 @@ export default function AccountboxComponent(props) {
     const logOut = async () => {
         let loggedOut = await auth.user.logout()
         if (loggedOut) {
-            console.log("HERE");
             dispatch(authTokenAction(''))
-            setTimeout(() => {
-                props.navigation.navigate("Login")
-            }, 500);
         }
     }
 
