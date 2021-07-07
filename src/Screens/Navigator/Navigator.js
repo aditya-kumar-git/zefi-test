@@ -56,14 +56,13 @@ export default function Navigator() {
                     isLoading ?
                         <Stack.Screen name="Loading" component={LoadingScreen} />
                         :
-                        <Stack.Screen name="Loading" component={LoadingScreen} />
-                        // AuthToken !== '' ?
-                        //     <Stack.Screen name="Dashboard" component={DashboardScreen} />
-                        //     :
-                        //     <>
-                        //         <Stack.Screen name="Login" component={LoginScreen} />
-                        //         <Stack.Screen name="Dashboard" component={DashboardScreen} />
-                        //     </>
+                        AuthToken !== '' ?
+                            <Stack.Screen name="Dashboard" component={DashboardScreen} />
+                            :
+                            <>
+                                <Stack.Screen name="Login" component={LoginScreen} />
+                                <Stack.Screen name="Dashboard" component={DashboardScreen} />
+                            </>
                 }
             </Stack.Navigator>
         </NavigationContainer>
